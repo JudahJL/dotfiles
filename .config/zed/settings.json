@@ -1,0 +1,84 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+    "diff_view_style": "split",
+    "cli_default_open_behavior": "existing_window",
+    "agent_servers": {
+        "claude-acp": {
+            "type": "registry"
+        },
+        "github-copilot-cli": {
+            "type": "registry",
+        },
+    },
+    "project_panel": {
+        "dock": "left",
+    },
+    "outline_panel": {
+        "dock": "left",
+    },
+    "collaboration_panel": {
+        "dock": "left",
+    },
+    "agent": {
+        "default_profile": "write",
+        "default_model": {
+            "provider": "copilot_chat",
+            "model": "claude-haiku-4.5",
+            "enable_thinking": true,
+        },
+        "dock": "right",
+        "favorite_models": [],
+        "model_parameters": [],
+    },
+    "base_keymap": "VSCode",
+    "tab_size": 4,
+    "hard_tabs": false,
+    "edit_predictions": {
+        "mode": "subtle",
+        "provider": "zed",
+    },
+    "git_panel": {
+        "dock": "left",
+        "tree_view": true,
+    },
+    "terminal": {
+        "font_family": "Iosevka Term",
+    },
+    "ui_font_family": "Iosevka",
+    "buffer_font_family": "Iosevka",
+    "icon_theme": {
+        "mode": "system",
+        "light": "Zed (Default)",
+        "dark": "Zed (Default)",
+    },
+    "telemetry": {
+        "diagnostics": false,
+        "metrics": false,
+    },
+    "ui_font_size": 16,
+    "buffer_font_size": 15.0,
+    "theme": {
+        "mode": "system",
+        "light": "One Light",
+        "dark": "Gruber Darker",
+    },
+    "languages": {
+        "Python": {
+            "language_servers": ["basedpyright", "ty", "ruff"],
+            "code_actions_on_format": {
+                "source.organizeImports.ruff": true,
+            },
+            "format_on_save": "on",
+        },
+        "Shell Script": {
+            "hard_tabs": true,
+        },
+    },
+}

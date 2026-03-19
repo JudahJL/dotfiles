@@ -53,4 +53,8 @@
 (ido-everywhere 1)
 (setq make-backup-files nil)
 
+(unless (file-exists-p custom-file)
+  (with-temp-buffer
+    (write-file custom-file)))
+
 (load custom-file)

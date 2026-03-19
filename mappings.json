@@ -1,0 +1,42 @@
+[
+    {
+        "repo": ".config/zed/settings.json",
+        "home": ".config/zed/settings.json"
+    },
+    {
+        "repo": ".config/nvim/.luarc.json",
+        "home": ".config/nvim/.luarc.json"
+    },
+    {
+        "repo": ".config/nvim/init.lua",
+        "home": ".config/nvim/init.lua"
+    },
+    {
+        "repo": ".config/kitty/kitty.conf",
+        "home": ".config/kitty/kitty.conf"
+    },
+    {
+        "repo": ".config/nvim/nvim-pack-lock.json",
+        "home": ".config/nvim/nvim-pack-lock.json"
+    },
+    { "repo": ".emacs.d/init.el", "home": ".emacs.d/init.el" },
+    { "repo": ".tmux.conf", "home": ".tmux.conf" },
+    { "repo": ".bashrc", "home": ".bashrc" },
+    { "repo": ".zshrc", "home": ".zshrc" },
+    {
+        "repo": ".config/mango/config.conf",
+        "home": ".config/mango/config.conf"
+    },
+    {
+        "repo": ".config/mango/auto-start.conf",
+        "home": ".config/mango/auto-start.conf"
+    },
+    {
+        "repo": ".config/mango/bind.conf",
+        "home": ".config/mango/bind.conf"
+    },
+    {
+        "repo": ".config/noctalia/config.toml",
+        "home": ".config/noctalia/config.toml"
+    }
+]
