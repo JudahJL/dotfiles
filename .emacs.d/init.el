@@ -41,6 +41,9 @@
     ("C-\"" . mc/skip-to-next-like-this)
     ("C-:" . mc/skip-to-previous-like-this)))
 
+;; TODO: enable signoff and sign commits automatically
+(use-package magit)
+
 (when (find-font (font-spec :family "Iosevka"))
   (add-to-list 'default-frame-alist '(font . "Iosevka-16")))
 

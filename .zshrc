@@ -29,8 +29,11 @@ precmd() {
 }
 PROMPT='%F{green}%#%f '
 
+if [[ -n "$TTY" ]]; then
+  export GPG_TTY=$(tty)
+fi
+
 export LANG=en_US.UTF-8 \
-       GPG_TTY=$(tty) \
        PATH="$PATH:$HOME/.local/bin/"
 
 # https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/refs/heads/master/plugins/sudo/sudo.plugin.zsh on Wed Jun  3 15:20:22 UTC 2026
