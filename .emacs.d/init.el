@@ -10,9 +10,19 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+(use-package nerd-icons
+  :ensure t
+  :custom
+  (nerd-icons-font-family "Iosevka Nerd Font"))
+
+(use-package project
+  :ensure t)
+
 (use-package dashboard
   :ensure t
   :config
+  (setq dashboard-projects-backend 'project-el)
+  (add-to-list 'dashboard-items '(projects . 5) t)
   (dashboard-setup-startup-hook))
 
 (use-package gruber-darker-theme
