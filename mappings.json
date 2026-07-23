@@ -34,9 +34,5 @@
     {
         "repo": ".config/mango/bind.conf",
         "home": ".config/mango/bind.conf"
-    },
-    {
-        "repo": ".config/noctalia/config.toml",
-        "home": ".config/noctalia/config.toml"
     }
 ]
