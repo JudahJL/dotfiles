@@ -1,5 +1,9 @@
 (setq custom-file "~/.emacs.d/.emacs.custom.el")
 
+(let ((local-bin (expand-file-name "~/.local/bin")))
+  (add-to-list 'exec-path local-bin)
+  (setenv "PATH" (concat local-bin path-separator (getenv "PATH"))))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
@@ -15,10 +19,14 @@
 (setq inhibit-startup-screen t)
 
 (tool-bar-mode -1)
-(menu-bar-mode -1)
+(menu-bar-mode 1)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 (setq make-backup-files nil)
+
+(use-package pinentry
+  :config
+  (pinentry-start))
 
 (use-package guru-mode
   :config
@@ -178,6 +186,44 @@
 
 (use-package embark-consult)
 
+(use-package corfu
+  :init
+  (global-corfu-mode)
+
+  :custom
+  (corfu-auto t)
+  (corfu-auto-prefix 2)
+  (corfu-auto-delay 0.15)
+  (corfu-cycle t))
+
+(use-package cape
+  :init
+  (add-to-list 'completion-at-point-functions #'cape-file)
+  (add-to-list 'completion-at-point-functions #'cape-dabbrev))
+
+(use-package eglot
+  :hook
+  ((python-ts-mode . eglot-ensure)
+   (rust-ts-mode . eglot-ensure)
+   (go-ts-mode . eglot-ensure)
+   (c-ts-mode . eglot-ensure)
+   (c++-ts-mode . eglot-ensure)
+   (js-ts-mode . eglot-ensure)
+   (typescript-ts-mode . eglot-ensure)
+   (tsx-ts-mode . eglot-ensure))
+
+  :custom
+  (eglot-autoshutdown t))
+
+(use-package flymake
+  :hook (prog-mode . flymake-mode))
+
+(setq major-mode-remap-alist
+      '((python-mode . python-ts-mode)
+	(js-mode . js-ts-mode)
+	(c-mode . c-ts-mode)
+	(c++-mode . c++-ts-mode)))
+
 (use-package which-key
   :config
   (which-key-mode 1))
@@ -220,7 +266,6 @@
     ("C-\"" . mc/skip-to-next-like-this)
     ("C-:" . mc/skip-to-previous-like-this)))
 
-;; TODO: enable signoff and sign commits automatically
 (use-package magit
   :custom
   (git-commit-signoff t))

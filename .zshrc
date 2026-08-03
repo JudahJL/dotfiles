@@ -15,6 +15,8 @@ compinit
 alias ls='ls --color=auto --hyperlink=auto'
 alias tree='tree -C --hyperlink'
 alias vim='nvim'
+alias diff='riff'
+alias less='moor'
 
 autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats "\uE0A0 %F{blue}%b%f %m%u%c %a"
