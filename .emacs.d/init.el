@@ -19,7 +19,7 @@
 (setq inhibit-startup-screen t)
 
 (tool-bar-mode -1)
-(menu-bar-mode 1)
+(menu-bar-mode -1)
 (setq display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
 (setq make-backup-files nil)
@@ -269,6 +269,17 @@
 (use-package magit
   :custom
   (git-commit-signoff t))
+
+(setq treesit-language-source-alist
+      '((c3 "https://github.com/c3lang/tree-sitter-c3")))
+
+(unless (treesit-language-available-p 'c3)
+  (treesit-install-language-grammar 'c3))
+
+(use-package c3-ts-mode
+  :vc (:url "https://github.com/c3lang/c3-ts-mode"
+	    :rev :newest)
+  :mode "\\.c3[it]?\\'")
 
 (unless (file-exists-p custom-file)
   (with-temp-buffer
