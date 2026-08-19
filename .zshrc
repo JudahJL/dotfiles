@@ -12,11 +12,7 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
-alias ls='ls --color=auto --hyperlink=auto'
-alias tree='tree -C --hyperlink'
-alias vim='nvim'
-alias diff='riff'
-alias less='moor'
+source $HOME/.aliasrc
 
 autoload -Uz vcs_info
 zstyle ':vcs_info:git:*' formats "\uE0A0 %F{blue}%b%f %m%u%c %a"

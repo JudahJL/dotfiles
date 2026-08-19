@@ -1,0 +1,6 @@
+alias ls='lsd -ht --group-directories-first --color=auto --hyperlink=auto'
+alias tree='tree -C --hyperlink'
+alias vim='nvim'
+alias diff='riff'
+alias less='moor'
+alias rm='rm -v'

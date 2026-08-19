@@ -3,12 +3,7 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto --hyperlink=auto'
-alias tree='tree -C --hyperlink'
-alias vim='nvim'
-alias diff='riff'
-alias less='moor'
-
+source $HOME/.aliasrc
 
 source /usr/share/git/git-prompt.sh
 PROMPT_COMMAND='PS1_CMD1=$(__git_ps1 "(%s)")'

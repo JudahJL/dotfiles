@@ -23,6 +23,7 @@
     { "repo": ".tmux.conf", "home": ".tmux.conf" },
     { "repo": ".bashrc", "home": ".bashrc" },
     { "repo": ".zshrc", "home": ".zshrc" },
+    { "repo": ".aliasrc", "home": ".aliasrc" },
     {
         "repo": ".config/mango/config.conf",
         "home": ".config/mango/config.conf"
