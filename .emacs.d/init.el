@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq custom-file "~/.emacs.d/.emacs.custom.el")
 
 (let ((local-bin (expand-file-name "~/.local/bin")))
@@ -269,6 +270,13 @@
 (use-package magit
   :custom
   (git-commit-signoff t))
+
+; Source - https://stackoverflow.com/a/71785402
+; Posted by Charles G
+; Retrieved 2026-09-07, License - CC BY-SA 4.0
+(use-package ansi-color
+    :hook (compilation-filter . ansi-color-compilation-filter))
+
 
 (setq treesit-language-source-alist
       '((c3 "https://github.com/c3lang/tree-sitter-c3")))
