@@ -211,7 +211,8 @@
    (c++-ts-mode . eglot-ensure)
    (js-ts-mode . eglot-ensure)
    (typescript-ts-mode . eglot-ensure)
-   (tsx-ts-mode . eglot-ensure))
+   (tsx-ts-mode . eglot-ensure)
+   (bash-ts-mode . eglot-ensure))
 
   :custom
   (eglot-autoshutdown t))
@@ -223,7 +224,8 @@
       '((python-mode . python-ts-mode)
 	(js-mode . js-ts-mode)
 	(c-mode . c-ts-mode)
-	(c++-mode . c++-ts-mode)))
+	(c++-mode . c++-ts-mode)
+	(sh-mode . bash-ts-mode)))
 
 (use-package which-key
   :config
@@ -288,6 +290,8 @@
   :vc (:url "https://github.com/c3lang/c3-ts-mode"
 	    :rev :newest)
   :mode "\\.c3[it]?\\'")
+
+(use-package gn-mode)
 
 (unless (file-exists-p custom-file)
   (with-temp-buffer
