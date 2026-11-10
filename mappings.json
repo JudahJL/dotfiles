@@ -16,6 +16,14 @@
         "home": ".config/kitty/kitty.conf"
     },
     {
+        "repo": ".config/ranger/rc.conf",
+        "home": ".config/ranger/rc.conf"
+    },
+    {
+        "repo": ".config/ueberzugpp/config.json",
+        "home": ".config/ueberzugpp/config.json"
+    },
+    {
         "repo": ".config/nvim/nvim-pack-lock.json",
         "home": ".config/nvim/nvim-pack-lock.json"
     },
