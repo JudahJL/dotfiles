@@ -1,9 +1,16 @@
 ;; -*- lexical-binding: t; -*-
 (setq custom-file "~/.emacs.d/.emacs.custom.el")
 
-(let ((local-bin (expand-file-name "~/.local/bin")))
-  (add-to-list 'exec-path local-bin)
-  (setenv "PATH" (concat local-bin path-separator (getenv "PATH"))))
+(cond
+ ((eq system-type 'gnu/linux)
+  (let ((local-bin (expand-file-name "~/.local/bin")))
+    (add-to-list 'exec-path local-bin)
+    (setenv "PATH" (concat local-bin path-separator (getenv "PATH")))))
+
+ ((eq system-type 'windows-nt)
+  (let ((local-bin (expand-file-name ".local/bin" (getenv "USERPROFILE"))))
+    (add-to-list 'exec-path local-bin)
+    (setenv "PATH" (concat local-bin path-separator (getenv "PATH"))))))
 
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
@@ -25,9 +32,10 @@
 (global-display-line-numbers-mode)
 (setq make-backup-files nil)
 
-(use-package pinentry
-  :config
-  (pinentry-start))
+(unless (eq system-type 'windows-nt)
+  (use-package pinentry
+    :config
+    (pinentry-start)))
 
 (use-package guru-mode
   :config
@@ -283,8 +291,9 @@
 (setq treesit-language-source-alist
       '((c3 "https://github.com/c3lang/tree-sitter-c3")))
 
-(unless (treesit-language-available-p 'c3)
-  (treesit-install-language-grammar 'c3))
+(unless (eq system-type 'windows-nt)
+  (unless (treesit-language-available-p 'c3)
+    (treesit-install-language-grammar 'c3)))
 
 (use-package c3-ts-mode
   :vc (:url "https://github.com/c3lang/c3-ts-mode"
