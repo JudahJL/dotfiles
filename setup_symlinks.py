@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
-import json
 import logging
 import os
 from dataclasses import dataclass
 from pathlib import Path
+
+try:
+    RAPIDJSON_NOT_FOUND = False
+    import rapidjson
+except ImportError:
+    import json
+    RAPIDJSON_NOT_FOUND = True
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -50,9 +56,18 @@ def main() -> None:
 
     mapping_file = repo / "mappings.json"
 
-    with mapping_file.open() as f:
-        temp = json.load(f)
-
+    if RAPIDJSON_NOT_FOUND:
+        try:
+            with mapping_file.open() as f:
+                temp = json.load(f)
+        except json.JSONDecodeError as err:
+            logger.error("Install python-rapidjson pkg, or fix errors", exc_info=err)
+            return
+    else:
+        temp = rapidjson.load(
+            str(mapping_file),
+            parse_mode=rapidjson.PM_COMMENTS | rapidjson.PM_TRAILING_COMMAS
+        )
     @dataclass(slots=True)
     class Mapping:
         src: Path
