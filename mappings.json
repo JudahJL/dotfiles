@@ -47,5 +47,9 @@
     {
         "repo": ".config/noctalia/noctalia-config.toml",
         "home": ".config/noctalia/noctalia-config.toml"
+    },
+    {
+	"repo": ".config/noctalia/plugins.toml",
+        "home": ".config/noctalia/plugins.toml"
     }
 ]

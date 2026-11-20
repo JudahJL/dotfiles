@@ -302,6 +302,8 @@
 
 (use-package gn-mode)
 
+(use-package bible-gateway)
+
 (unless (file-exists-p custom-file)
   (with-temp-buffer
     (write-file custom-file)))

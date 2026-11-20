@@ -1,0 +1,10 @@
+[plugins]
+# Fully-qualified ids ("<author>/<plugin>") that are active.
+enabled = ["noctalia/wallhaven"]
+auto_update = "official" # "all" | "official" | "none"; background git updates on startup and every 6 hours
+
+[[plugins.source]]
+name     = "Wallhaven"
+kind     = "git"
+location = "https://github.com/noctalia-dev/official-plugins"
+enabled  = true
