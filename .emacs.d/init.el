@@ -304,6 +304,13 @@
 
 (use-package bible-gateway)
 
+(use-package textui
+  :vc (:url "https://github.com/yibie/textui"))
+
+(use-package md-mode
+  :vc (:url "https://github.com/yibie/md-mode")
+  :mode ("\\.md\\'" . md-mode))
+
 (keymap-global-set "C-x c" 'compile)
 
 (unless (file-exists-p custom-file)

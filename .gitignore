@@ -1,3 +1,4 @@
 /.zed
 /**/__pycache__/
 /**/*.log
+/setup_symlinks
