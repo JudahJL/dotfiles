@@ -1,0 +1,3 @@
+[submodule "thumbfast"]
+	path = extern/thumbfast
+	url = git@github.com:po5/thumbfast.git

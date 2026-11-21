@@ -304,6 +304,8 @@
 
 (use-package bible-gateway)
 
+(keymap-global-set "C-x c" 'compile)
+
 (unless (file-exists-p custom-file)
   (with-temp-buffer
     (write-file custom-file)))

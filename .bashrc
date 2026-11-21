@@ -3,6 +3,11 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+if test -n "$KITTY_INSTALLATION_DIR"; then
+    export KITTY_SHELL_INTEGRATION="enabled"
+    source "$KITTY_INSTALLATION_DIR/shell-integration/bash/kitty.bash"
+fi
+
 source $HOME/.aliasrc
 
 source /usr/share/git/git-prompt.sh

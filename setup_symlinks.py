@@ -59,12 +59,12 @@ def main() -> None:
     if RAPIDJSON_NOT_FOUND:
         try:
             with mapping_file.open() as f:
-                temp = json.load(f)
+                temp: list[dict[str, str]] = json.load(f)
         except json.JSONDecodeError as err:
             logger.error("Install python-rapidjson pkg, or fix errors", exc_info=err)
             return
     else:
-        temp = rapidjson.load(
+        temp: list[dict[str, str]] = rapidjson.load(
             str(mapping_file),
             parse_mode=rapidjson.PM_COMMENTS | rapidjson.PM_TRAILING_COMMAS
         )
@@ -73,10 +73,12 @@ def main() -> None:
         src: Path
         dest: Path
 
-    mappings = [
-        Mapping(src=repo / item["repo"], dest=home / item["home"])
-        for item in temp
-    ]
+    mappings: list[Mapping] = []
+    for item in temp:
+        if (mirror := item.get("mirror")) is not None:
+            mappings.append(Mapping(src=repo / mirror, dest=home / mirror))
+        else:
+            mappings.append(Mapping(src=repo / item["repo"], dest=home / item["home"]))
     del temp
 
     for map in mappings:
