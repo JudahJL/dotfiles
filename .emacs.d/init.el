@@ -1,5 +1,12 @@
-;; -*- lexical-binding: t; -*-
-(setq custom-file "~/.emacs.d/.emacs.custom.el")
+;; init.el --- JudahJl's init file for configuring emacs  -*- lexical-binding: t; -*-
+
+;;; Commentary:
+
+;; init.el purely configured for my needs
+
+;;; Code:
+
+(setq custom-file (expand-file-name ".emacs.custom.el" user-emacs-directory))
 
 (cond
  ((eq system-type 'gnu/linux)
@@ -28,16 +35,25 @@
 
 (tool-bar-mode -1)
 (menu-bar-mode -1)
-(setq display-line-numbers-type 'relative)
+(setq-default display-line-numbers-type 'relative)
 (global-display-line-numbers-mode)
-(setq make-backup-files nil)
+(size-indication-mode 1)
+(column-number-mode 1)
+(setq-default make-backup-files nil
+              indent-tabs-mode nil
+              compilation-scroll-output t
+              tab-width 4)
+(setq dired-listing-switches "-alh")
 
-(unless (eq system-type 'windows-nt)
-  (use-package pinentry
-    :config
-    (pinentry-start)))
+(use-package pinentry
+  :unless (eq system-type 'windows-nt)
+  :functions pinentry-start
+  :config
+  (pinentry-start))
 
 (use-package guru-mode
+  :defines (guru-warn-only)
+  :functions (guru-global-mode)
   :config
   (setq guru-warn-only t)
   (guru-global-mode 1))
@@ -53,9 +69,16 @@
   :custom
   (nerd-icons-font-family "Iosevka NF"))
 
+(use-package nerd-icons-xref
+  :after (nerd-icons)
+  :functions (nerd-icons-xref-mode)
+  :init
+  (nerd-icons-xref-mode))
+
 (use-package ripgrep)
 
 (use-package vertico
+  :functions vertico-mode
   :init
   (vertico-mode 1))
 
@@ -66,17 +89,25 @@
   (completion-pcm-leading-wildcard t))
 
 (use-package marginalia
+  :functions marginalia-mode
   :init
   (marginalia-mode))
 
 (use-package nerd-icons-completion
+  :functions nerd-icons-completion-mode nerd-icons-completion-marginalia-setup
   :after marginalia
   :config
   (nerd-icons-completion-mode)
   (add-hook 'marginalia-mode-hook #'nerd-icons-completion-marginalia-setup))
 
+(use-package nerd-icons-dired
+  :hook
+  (dired-mode . nerd-icons-dired-mode))
+
 ;; Example configuration for Consult
 (use-package consult
+  :functions (consult-register-window consult-xref consult-customize)
+  :defines (consult-preview-key consult-theme consult-ripgrep consult-git-grep consult-grep consult-man consult-bookmark consult-recent-file consult-xref consult-source-bookmark consult-source-bookmark consult-source-recent-file consult-source-file-register consult-source-project-recent-file)
   ;; Replace bindings. Lazily loaded by `use-package'.
   :bind (;; C-c bindings in `mode-specific-map'
          ("C-c M-x" . consult-mode-command)
@@ -143,7 +174,7 @@
   (setq register-preview-delay 0.5)
 
   ;; Use Consult to select xref locations with preview
-  (setq xref-show-xrefs-function #'consult-xref
+  (setq-default xref-show-xrefs-function #'consult-xref
         xref-show-definitions-function #'consult-xref)
 
   ;; Configure other variables and modes in the :config section,
@@ -152,7 +183,7 @@
 
   ;; Optionally configure preview. The default value
   ;; is 'any, such that any key triggers the preview.
-  ;; (setq consult-preview-key 'any)
+  (setq consult-preview-key 'any)
   ;; (setq consult-preview-key "M-.")
   ;; (setq consult-preview-key '("S-<down>" "S-<up>"))
   ;; For some commands and buffer sources it is useful to configure the
@@ -168,7 +199,7 @@
 
   ;; Optionally configure the narrowing key.
   ;; Both < and C-+ work reasonably well.
-  (setq consult-narrow-key "<") ;; "C-+"
+  (setq-default consult-narrow-key "<") ;; "C-+"
 
   ;; Optionally make narrowing help available in the minibuffer.
   ;; You may want to use `embark-prefix-help-command' or which-key instead.
@@ -176,6 +207,7 @@
 )
 
 (use-package embark
+  :functions (embark-prefix-help-command embark-context-menu)
   :bind
   ( :map global-map
    ("C-." . embark-act)         ;; pick some comfortable binding
@@ -196,6 +228,8 @@
 (use-package embark-consult)
 
 (use-package corfu
+  :defines (corfu-margin-formatters)
+  :functions (global-corfu-mode corfu-mode)
   :init
   (global-corfu-mode)
 
@@ -205,7 +239,14 @@
   (corfu-auto-delay 0.15)
   (corfu-cycle t))
 
+(use-package nerd-icons-corfu
+  :after (corfu)
+  :functions (nerd-icons-corfu-formatter)
+  :init
+  (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
+
 (use-package cape
+  :functions (cape-file cape-dabbrev)
   :init
   (add-to-list 'completion-at-point-functions #'cape-file)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev))
@@ -240,11 +281,13 @@
   (which-key-mode 1))
 
 (use-package projectile
+  :defines (projectile-project-search-path)
+  :functions (projectile-mode)
   :init
-  (setq projectile-project-search-path '("~/projects/"
-					 "~/work/"
-					 "~/playground/"
-					 "~/programming/"))
+  (setq projectile-project-search-path '(("~/projects/" . 1)
+					 ("~/work/" . 1)
+					 ("~/playground/" . 1)
+					 ("~/programming/" . 1)))
   :bind
   ( :map global-map
     ("C-c p" . projectile-command-map))
@@ -252,6 +295,8 @@
   (projectile-mode 1))
 
 (use-package dashboard
+  :defines (dashboard-projects-backend dashboard-items dashboard-startupify-list dashboard-display-icons-p dashboard-icon-type)
+  :functions (dashboard-setup-startup-hook dashboard-open)
   :config
   (setq dashboard-projects-backend 'projectile)
   (setq dashboard-items '((recents   . 5)
@@ -265,7 +310,12 @@
                                     dashboard-insert-init-info
                                     dashboard-insert-items
                                     dashboard-insert-footer))
-  (dashboard-setup-startup-hook))
+  (setq initial-buffer-choice 'dashboard-open)
+  (add-hook 'server-after-make-frame-hook 'dashboard-open)
+  (dashboard-setup-startup-hook)
+  (setq dashboard-display-icons-p t)     ; display icons on both GUI and terminal
+  (setq dashboard-icon-type 'nerd-icons) ; use `nerd-icons' package
+  )
 
 (use-package multiple-cursors
   :bind
@@ -276,6 +326,13 @@
     ("C-c C-<" . mc/mark-all-like-this)
     ("C-\"" . mc/skip-to-next-like-this)
     ("C-:" . mc/skip-to-previous-like-this)))
+
+(use-package move-text
+  :functions (move-text-up move-text-down)
+  :bind
+  ( :map global-map
+    ("M-p" . move-text-up)
+    ("M-n" . move-text-down)))
 
 (use-package magit
   :custom
@@ -288,7 +345,7 @@
     :hook (compilation-filter . ansi-color-compilation-filter))
 
 
-(setq treesit-language-source-alist
+(setq-default treesit-language-source-alist
       '((c3 "https://github.com/c3lang/tree-sitter-c3")))
 
 (unless (eq system-type 'windows-nt)
@@ -305,16 +362,32 @@
 (use-package bible-gateway)
 
 (use-package textui
-  :vc (:url "https://github.com/yibie/textui"))
+  :vc (:url "https://github.com/yibie/textui"
+	    :rev :newest))
 
 (use-package md-mode
-  :vc (:url "https://github.com/yibie/md-mode")
+  :vc (:url "https://github.com/yibie/md-mode"
+	    :rev :newest)
   :mode ("\\.md\\'" . md-mode))
 
 (keymap-global-set "C-x c" 'compile)
+(keymap-global-set "C-," 'duplicate-dwim)
+
+;; stolen from https://github.com/rexim/dotfiles/blob/36955dfe7aaabd58227be68a405f578b6ecffc53/.emacs#L114
+(defun rc/set-up-whitespace-handling ()
+  "Handle whilespaces on programming modes."
+  (interactive)
+  (whitespace-mode 1)
+  (add-to-list 'write-file-functions 'delete-trailing-whitespace))
+
+(setq-default whitespace-style '(face tabs spaces trailing space-before-tab newline empty space-after-tab space-mark tab-mark))
+
+(add-hook 'prog-mode-hook 'rc/set-up-whitespace-handling)
 
 (unless (file-exists-p custom-file)
   (with-temp-buffer
     (write-file custom-file)))
 
 (load custom-file)
+(provide 'init)
+;;; init.el ends here
